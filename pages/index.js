@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 
 // Simple function component
-const CompA = () => {
+const CompA = (props) => {
   return (
     <>
       <h1>Hi Comp A</h1>
-      <CompC />
+      {/* jsx returned by prop jsxChild have to be
+      displayed in that way :
+      {<props.jsxChild />} */}
+      {props.isDisplayed && <props.jsxChild />}
     </>
   );
 };
 
 // Class component with state
 class CompC extends React.Component {
-  state = {
-    classValue: 15,
-  };
+  constructor() {
+    super();
+    this.state = {
+      classValue: 15,
+    };
+  }
 
   incValue(inc) {
     let newValue = this.state.classValue + inc;
@@ -24,9 +30,11 @@ class CompC extends React.Component {
   }
 
   render() {
+    const { classValue } = this.state;
     return (
       <>
-        <h1>Comp C</h1>;<h1>Current Value : {this.state.classValue}</h1>
+        <h1>Comp C</h1>
+        <h1>Current Value : {classValue}</h1>
         <button type="button" onClick={() => this.incValue(+1)}>
           Incrementer
         </button>
@@ -53,6 +61,12 @@ export default function Home() {
         Decrementer
       </button>
       <CompC />
+      <CompA
+        isDisplayed={true}
+        // props can contain function
+        // here it return a jsx child
+        jsxChild={() => <p>Hi, Jsx Child...!</p>}
+      />
     </>
   );
 }
