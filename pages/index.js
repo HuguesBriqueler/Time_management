@@ -9,6 +9,8 @@ const CompA = (props) => {
       displayed in that way :
       {<props.jsxChild />} */}
       {props.isDisplayed && <props.jsxChild />}
+      <props.propComp />
+    <hr></hr>
     </>
   );
 };
@@ -30,20 +32,32 @@ class CompC extends React.Component {
   }
 
   render() {
+    // State value destructured
     const { classValue } = this.state;
+    // Prop value destructured -- As a component 'propComp' must be upper cased
+    const { propValue, propComp: PropComp } = this.props;
+
     return (
       <>
-        <h1>Comp C</h1>
-        <h1>Current Value : {classValue}</h1>
+        <h1>Comp C propValue = {propValue}</h1>
+        <h1>Comp C Value : {classValue}</h1>
         <button type="button" onClick={() => this.incValue(+1)}>
           Incrementer
         </button>
         <button type="button" onClick={() => this.incValue(-1)}>
           Decrementer
         </button>
+        <hr></hr>
+        <PropComp />
       </>
     );
   }
+}
+
+const NewComponent = () => {
+  return (
+    <h1>New component !</h1>
+  )
 }
 
 export default function Home() {
@@ -60,12 +74,15 @@ export default function Home() {
       <button type="button" onClick={() => incValue(-1)}>
         Decrementer
       </button>
-      <CompC />
+      <hr></hr>
+      <CompC propValue={value} propComp={NewComponent} />
       <CompA
         isDisplayed={true}
         // props can contain function
         // here it return a jsx child
         jsxChild={() => <p>Hi, Jsx Child...!</p>}
+        // Same for components
+        propComp = {NewComponent}
       />
     </>
   );
