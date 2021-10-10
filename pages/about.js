@@ -1,10 +1,13 @@
-import React from 'react'
+import Navbar from "components/Navbar"
 
 function About() {
   return (
-    <h1>
-      Welcome to 'about' page
-    </h1>
+    <>
+      <Navbar />
+      <h1>
+        Welcome to 'about' page
+      </h1>
+    </>
   )
 }
 
