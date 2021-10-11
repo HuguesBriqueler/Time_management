@@ -1,34 +1,38 @@
 import Layout from "components/Layout";
+import axios from "axios";
 import { useState } from "react";
 
 const DEFAULT_DATA = {
   title: "",
   description: "",
-  link : "",
+  link: "",
   priority: "2",
-  timeToFinish: 60
-}
+  timeToFinish: 60,
+};
 
 const ResourceCreate = () => {
-  const [form, setForm] = useState(DEFAULT_DATA)
+  const [form, setForm] = useState(DEFAULT_DATA);
 
   const submitForm = () => {
-    console.log(form)
-  }
+    // fetch request is sent to our server-side api
+    axios.post("/api/resources", form)
+      .then( alert("Data have been sent !") )
+      .catch( err => alert(err?.response?.data));
+  };
 
   const resetForm = () => {
-    setForm(DEFAULT_DATA)
-  }
+    setForm(DEFAULT_DATA);
+  };
 
   const handleChange = (e) => {
-    console.log(`${e.target.name} send ${e.target.value}`)
-    const { name, value } = e.target
+    console.log(`${e.target.name} send ${e.target.value}`);
+    const { name, value } = e.target;
     setForm({
       ...form,
-      [name]: value
+      [name]: value,
       // [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   return (
     <Layout>
@@ -41,9 +45,9 @@ const ResourceCreate = () => {
                 <div className="field">
                   <label className="label">Title</label>
                   <div className="control">
-                    <input 
-                      className="input" 
-                      type="text" 
+                    <input
+                      className="input"
+                      type="text"
                       placeholder="Enter a title"
                       value={form.title}
                       name="title"
@@ -54,36 +58,37 @@ const ResourceCreate = () => {
                 <div className="field">
                   <label className="label">Description</label>
                   <div className="control">
-                    <textarea 
-                      className="textarea" 
+                    <textarea
+                      className="textarea"
                       placeholder="Enter description"
                       value={form.description}
                       name="description"
-                      onChange={handleChange}>
-                    </textarea>
+                      onChange={handleChange}
+                    ></textarea>
                   </div>
                 </div>
                 <div className="field">
                   <label className="label">Link</label>
                   <div className="control">
-                    <input 
-                      className="input" 
-                      type="text" 
+                    <input
+                      className="input"
+                      type="text"
                       placeholder="Enter a link to the resource"
                       value={form.link}
                       name="link"
                       onChange={handleChange}
-                      />
+                    />
                   </div>
                 </div>
                 <div className="field">
                   <label className="label">Priority</label>
                   <div className="control">
                     <div className="select">
-                      <select 
+                      <select
                         value={form.priority}
                         name="priority"
-                        onChange={handleChange}>
+                        onChange={handleChange}
+                      >
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -94,14 +99,14 @@ const ResourceCreate = () => {
                 <div className="field">
                   <label className="label">Time to finish</label>
                   <div className="control">
-                    <input 
-                      className="input" 
-                      type="number" 
+                    <input
+                      className="input"
+                      type="number"
                       placeholder="60"
                       value={form.timeToFinish}
                       name="timeToFinish"
                       onChange={handleChange}
-                      />
+                    />
                   </div>
                   <p className="help">Finish time in minutes</p>
                 </div>
@@ -111,15 +116,17 @@ const ResourceCreate = () => {
                       type="button"
                       onClick={submitForm}
                       className="button is-link"
-                      >Submit
-                      </button>
+                    >
+                      Submit
+                    </button>
                   </div>
                   <div className="control">
                     <button
                       type="button"
                       onClick={resetForm}
                       className="button is-link is-light"
-                      >Reset form
+                    >
+                      Reset form
                     </button>
                   </div>
                 </div>
@@ -129,7 +136,7 @@ const ResourceCreate = () => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default ResourceCreate
+export default ResourceCreate;

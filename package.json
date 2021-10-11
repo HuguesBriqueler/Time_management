@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.22.0",
     "bulma": "^0.9.3",
     "next": "11.1.2",
     "react": "17.0.2",
