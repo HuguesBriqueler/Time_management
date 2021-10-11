@@ -1,6 +1,7 @@
 import Layout from "components/Layout";
 import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/dist/client/router";
 
 const DEFAULT_DATA = {
   title: "",
@@ -12,11 +13,14 @@ const DEFAULT_DATA = {
 
 const ResourceCreate = () => {
   const [form, setForm] = useState(DEFAULT_DATA);
+  
+  const router = useRouter()
 
   const submitForm = () => {
     // fetch request is sent to our server-side api
     axios.post("/api/resources", form)
-      .then( res => alert(res.data))
+      // .then( res => alert(res.data))
+      .then( _ => router.push("/")) // La "variable" _ (underscore) indique qu'il existe un parametre mais qu'il sera ignoré
       .catch( err => alert(err?.response?.data));
   };
 

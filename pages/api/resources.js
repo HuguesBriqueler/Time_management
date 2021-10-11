@@ -22,7 +22,8 @@ export default async function(req, res) {
     try {
       const axiosRes = await axios.post("http://localhost:3001/api/resources", req.body)
       return res.send(axiosRes.data)
-    } catch {
+    } 
+    catch {
       return res.status(422).send("Something went wrong while storing data")
     }
   }
