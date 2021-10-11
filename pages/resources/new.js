@@ -16,7 +16,7 @@ const ResourceCreate = () => {
   const submitForm = () => {
     // fetch request is sent to our server-side api
     axios.post("/api/resources", form)
-      .then( alert("Data have been sent !") )
+      .then( res => alert(res.data))
       .catch( err => alert(err?.response?.data));
   };
 

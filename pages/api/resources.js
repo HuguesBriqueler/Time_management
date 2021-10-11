@@ -19,8 +19,11 @@ export default async function(req, res) {
       return res.status(422).send("Data are missing")
     }
     
-    axios.post("http://localhost:3001/api/resources", req.body)
-    
-    return res.send("Data have been sent !")
+    try {
+      const axiosRes = await axios.post("http://localhost:3001/api/resources", req.body)
+      return res.send(axiosRes.data)
+    } catch {
+      return res.status(422).send("Something went wrong while storing data")
+    }
   }
 }
