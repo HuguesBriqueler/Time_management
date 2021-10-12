@@ -1,3 +1,4 @@
+import Link from "next/dist/client/link"
 
 function RessourceHighlight({resources}) {
   return (
@@ -16,6 +17,11 @@ function RessourceHighlight({resources}) {
                           <h2 className="subtitle is-4">{resource.createdAt}</h2>
                           <h1 className="title">{resource.title}</h1>
                           <p>{resource.description}</p>
+                          <Link href={`/resources/${resource.id}`}>
+                            <a className="button is-link">
+                              Details
+                            </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
