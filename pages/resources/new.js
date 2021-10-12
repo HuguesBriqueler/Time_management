@@ -29,7 +29,7 @@ const ResourceCreate = () => {
   };
 
   const handleChange = (e) => {
-    console.log(`${e.target.name} send ${e.target.value}`);
+    // console.log(`${e.target.name} send ${e.target.value}`);
     const { name, value } = e.target;
     setForm({
       ...form,
