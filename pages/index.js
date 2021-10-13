@@ -30,7 +30,7 @@ export async function getServerSideProps() {
   // getServerSideProps peux sans probleme CORS faire une requete sur un serveur externe
   const resData = await fetch("http://localhost:3001/api/resources")
   const data = await resData.json()
-  console.log(data)
+  // console.log(data)
 
   return {
     props: {
