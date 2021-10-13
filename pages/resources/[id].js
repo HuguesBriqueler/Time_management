@@ -1,6 +1,14 @@
 import Layout from "components/Layout";
+import { useRouter } from "next/router";
 
-const resourceDetail = ({ resource }) => {
+const ResourceDetail = ({ resource }) => {
+  const router = useRouter()
+  // router allow to verify isFallback (true) 
+  // then a page (message) is diplayed until getStaticProps give a result
+  if (router.isFallback) {
+    return <div>Loading Data...!</div>
+  }
+
   return (
     <Layout>
       <section className="hero ">
@@ -35,7 +43,8 @@ export async function getStaticPaths() {
   })
   return {
     paths,  // equal to --> paths: paths
-    fallback: false  // other paths will lead to 404 page
+    fallback: true  // false --> other paths will immediatly lead to 404 page
+    // true --> Next will wait for getStaticProps and generate new static page
   }
 }
 
@@ -52,6 +61,7 @@ export async function getStaticProps({ params }) {
     props: {
       resource: data,
     },
+    revalidate : 10  // permet de revalider la page static toutes les n secondes
   };
 }
 
@@ -71,4 +81,4 @@ export async function getStaticProps({ params }) {
 //   };
 // }
 
-export default resourceDetail;
+export default ResourceDetail;

@@ -5,7 +5,7 @@ function About() {
     <>
       <Navbar />
       <h1>
-        Welcome to 'about' page
+        Welcome to about page
       </h1>
     </>
   )
