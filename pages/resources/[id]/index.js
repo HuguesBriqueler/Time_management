@@ -1,13 +1,15 @@
 import Layout from "components/Layout";
-import { useRouter } from "next/router";
+import Link from "next/link";
+// import { useRouter } from "next/router";
 
 const ResourceDetail = ({ resource }) => {
-  const router = useRouter()
-  // router allow to verify isFallback (true) 
+  // ----- Way to do with getstaticPaths & getStaticProps - Static way -----
+  // const router = useRouter();
+  // In static way router function allow to verify isFallback (true)
   // then a page (message) is diplayed until getStaticProps give a result
-  if (router.isFallback) {
-    return <div>Loading Data...!</div>
-  }
+  // if (router.isFallback) {
+  //   return <div>Loading Data...!</div>
+  // }
 
   return (
     <Layout>
@@ -21,6 +23,11 @@ const ResourceDetail = ({ resource }) => {
                     <h2 className="subtitle is-4">{resource.createdAt}</h2>
                     <h1 className="title">{resource.title}</h1>
                     <p>{resource.description}</p>
+                    <Link href={`/resources/${resource.id}/edit`}>
+                      <a className="button is-warning">
+                        Update
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -32,23 +39,9 @@ const ResourceDetail = ({ resource }) => {
   );
 };
 
-export async function getStaticPaths() {
-  // Here are gathered each page id, then, at build time, a page will be generated for each id (path)
-  const resData = await fetch("http://localhost:3001/api/resources")
-  const data = await resData.json()
-  const paths = data.map(resource => {
-    return {
-      params: {id: resource.id}
-    }
-  })
-  return {
-    paths,  // equal to --> paths: paths
-    fallback: true  // false --> other paths will immediatly lead to 404 page
-    // true --> Next will wait for getStaticProps and generate new static page
-  }
-}
+//  ---------- Way to do with getServerSideProps - Dynamic way ----------
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   // params refers to id parameter ('/resources/id') set in file name ('[id].js')
   // query refers to 'id' and other 'query parameters' such as '/resources/456?someQuery=hello'
 
@@ -60,12 +53,29 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       resource: data,
-    },
-    revalidate : 10  // permet de revalider la page static toutes les n secondes
+    }
   };
 }
 
-// export async function getServerSideProps({ params }) {
+//  ---------- Way to do with getstaticPaths & getStaticProps - Static way ----------
+//
+// export async function getStaticPaths() {
+//   // Here are gathered each page id, then, at build time, a page will be generated for each id (path)
+//   const resData = await fetch("http://localhost:3001/api/resources")
+//   const data = await resData.json()
+//   const paths = data.map(resource => {
+//     return {
+//       params: {id: resource.id}
+//     }
+//   })
+//   return {
+//     paths,  // equal to --> paths: paths
+//     fallback: true  // false --> other paths will immediatly lead to 404 page
+//     // true --> Next will wait for getStaticProps and generate new static page
+//   }
+// }
+
+// export async function getStaticProps({ params }) {
 //   // params refers to id parameter ('/resources/id') set in file name ('[id].js')
 //   // query refers to 'id' and other 'query parameters' such as '/resources/456?someQuery=hello'
 
@@ -78,6 +88,7 @@ export async function getStaticProps({ params }) {
 //     props: {
 //       resource: data,
 //     },
+//     revalidate : 10  // permet de revalider la page static toutes les n secondes
 //   };
 // }
 
