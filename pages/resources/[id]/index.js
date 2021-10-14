@@ -1,16 +1,22 @@
 import Layout from "components/Layout";
 import Link from "next/link";
+import axios from "axios";
 // import { useRouter } from "next/router";
 
 const ResourceDetail = ({ resource }) => {
   // ----- Way to do with getstaticPaths & getStaticProps - Static way -----
   // const router = useRouter();
-  // In static way router function allow to verify isFallback (true)
+  // ----- In static way router function allow to verify isFallback (true)
   // then a page (message) is diplayed until getStaticProps give a result
   // if (router.isFallback) {
   //   return <div>Loading Data...!</div>
   // }
 
+  const ActiveResource = () => {
+    axios.patch("/api/resources", {...resource, status: "active"})
+      .then(_ => alert("Resource has been activated !"))
+      .catch(_ => alert("Cannot activate the resource !"))
+  }
   return (
     <Layout>
       <section className="hero ">
@@ -23,11 +29,17 @@ const ResourceDetail = ({ resource }) => {
                     <h2 className="subtitle is-4">{resource.createdAt}</h2>
                     <h1 className="title">{resource.title}</h1>
                     <p>{resource.description}</p>
+                    <p>Time to finish : {resource.timeToFinish} min.</p>
                     <Link href={`/resources/${resource.id}/edit`}>
                       <a className="button is-warning">
                         Update
                       </a>
                     </Link>
+                    <button 
+                      onClick={ActiveResource} 
+                      className="button is-success ml-1">
+                      Activate
+                    </button>
                   </div>
                 </div>
               </div>
