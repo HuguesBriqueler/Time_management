@@ -3,6 +3,7 @@ import Link from "next/link";
 // import { useRouter } from "next/router";
 
 const ResourceDetail = ({ resource }) => {
+  // ----- Way to do with getstaticPaths & getStaticProps - Static way -----
   // const router = useRouter();
   // In static way router function allow to verify isFallback (true)
   // then a page (message) is diplayed until getStaticProps give a result

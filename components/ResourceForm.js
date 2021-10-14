@@ -9,8 +9,9 @@ const DEFAULT_DATA = {
 };
 
 // Here the component recieve the onFormSubmit function from props
-function ResourceForm({onFormSubmit}) {
-  const [form, setForm] = useState(DEFAULT_DATA);
+function ResourceForm({onFormSubmit, initialData}) {
+  // initialData is set if it exists, else DEFAULT_DATA will be set
+  const [form, setForm] = useState(initialData || DEFAULT_DATA);
 
   const resetForm = () => {
     setForm(DEFAULT_DATA);
