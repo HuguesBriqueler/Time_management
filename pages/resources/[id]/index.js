@@ -12,9 +12,12 @@ const ResourceDetail = ({ resource }) => {
   //   return <div>Loading Data...!</div>
   // }
 
-  const ActiveResource = () => {
+  const activeResource = () => {
     axios.patch("/api/resources", {...resource, status: "active"})
-      .then(_ => alert("Resource has been activated !"))
+      .then(_ => {
+        alert("Resource has been activated !");
+        location.reload();
+      })
       .catch(_ => alert("Cannot activate the resource !"))
   }
   return (
@@ -36,7 +39,7 @@ const ResourceDetail = ({ resource }) => {
                       </a>
                     </Link>
                     <button 
-                      onClick={ActiveResource} 
+                      onClick={activeResource} 
                       className="button is-success ml-1">
                       Activate
                     </button>
