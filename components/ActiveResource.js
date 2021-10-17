@@ -22,6 +22,7 @@ function ActiveResource() {
         resource.timeToFinish = updatedTimeToFinish;
         setSeconds(updatedTimeToFinish);
       }
+      
       setResource(resource);
     };
     fetchResource();
@@ -37,6 +38,15 @@ function ActiveResource() {
     return () => clearInterval(interval);
   }, [seconds]);
 
+  const completeResource = () => {
+    axios.patch("/api/resources", {...resource, status: "complete"})
+      .then(_ => {
+        alert("Resource has been completed !");
+        location.reload();
+      })
+      .catch(_ => alert("Cannot complete the resource !"))
+  }
+
   const hasResource = resource && resource.id;
   return (
     <div className="active-resource">
@@ -49,12 +59,16 @@ function ActiveResource() {
             <h2 className="elapsed-time">{seconds}</h2>
           ) : (
             <h2 className="elapsed-time">
-              <button className="button is-success">Terminate Action</button>
+              <button
+                onClick={completeResource}
+                className="button is-success">
+                Terminate Action
+              </button>
             </h2>
           ))}
       </div>
       {hasResource ? (
-        <Link href="/">
+        <Link href={`/resources/${resource.id}`}>
           <a className="button">Go to resource</a>
         </Link>
       ) : (
