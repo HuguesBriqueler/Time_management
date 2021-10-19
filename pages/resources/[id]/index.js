@@ -71,7 +71,7 @@ export async function getServerSideProps({ params }) {
   // query refers to 'id' and other 'query parameters' such as '/resources/456?someQuery=hello'
 
   const dataRes = await fetch(
-    `http://localhost:3001/api/resources/${params.id}`
+    `${process.env.API_URL}/resources/${params.id}`
   );
   const data = await dataRes.json();
 
