@@ -1,39 +1,40 @@
-import Link from "next/dist/client/link"
+import Link from "next/dist/client/link";
+import ResourceLabel from "components/ResourceLabel";
+import moment from "moment";
 
-function RessourceHighlight({resources}) {
+function RessourceHighlight({ resources }) {
   return (
     <>
       <section className="hero ">
         <div className="hero-body">
           <div className="container">
-            {
-              resources.map(resource => {
-                return (
-                  // On donne une clé UNIQUE à l'element de plus haut niveau
-                  <section key = {resource.id} className="section">
-                    <div className="columns">
-                      <div className="column is-8 is-offset-2">
-                        <div className="content is-medium">
-                          <h2 className="subtitle is-4">{resource.createdAt}</h2>
-                          <h1 className="title">{resource.title}</h1>
-                          <p>{resource.description}</p>
-                          <Link href={`/resources/${resource.id}`}>
-                            <a className="button is-link">
-                              Details
-                            </a>
-                          </Link>
-                        </div>
+            {resources.map((resource) => {
+              return (
+                // On donne une clé UNIQUE à l'element de plus haut niveau
+                <section key={resource.id} className="section">
+                  <div className="columns">
+                    <div className="column is-8 is-offset-2">
+                      <div className="content is-medium">
+                        <h2 className="subtitle is-4">
+                          {moment(resource.createdAt).format("LLLL")}
+                          <ResourceLabel status={resource.status} />
+                        </h2>
+                        <h1 className="title">{resource.title}</h1>
+                        <p className="mb-2">{resource.description}</p>
+                        <Link href={`/resources/${resource.id}`}>
+                          <a className="button is-light">Details</a>
+                        </Link>
                       </div>
                     </div>
-                  </section>
-                )
-              })
-            }
+                  </div>
+                </section>
+              );
+            })}
           </div>
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default RessourceHighlight
+export default RessourceHighlight;

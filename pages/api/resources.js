@@ -4,10 +4,9 @@
 
 import axios from "axios"
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default async function(req, res) {
+const resources = async (req, res) => {
   if (req.method === "GET") {
-    const resData = await fetch("http://localhost:3001/api/resources")
+    const resData = await fetch(`${process.env.API_URL}/resources`)
     const data = await resData.json()
   
     return res.send(data)
@@ -20,8 +19,8 @@ export default async function(req, res) {
     }
     
     const url = req.method === "POST"
-      ? "http://localhost:3001/api/resources"
-      : `http://localhost:3001/api/resources/${id}`
+      ? `${process.env.API_URL}/resources`
+      : `${process.env.API_URL}/resources/${id}`
     try {
       // La notation entre crochets [] permet d'introduire des strings : axios.post == axios["post"]
       const axiosRes = await axios[req.method.toLowerCase()](url, req.body)
@@ -32,3 +31,5 @@ export default async function(req, res) {
     }
   }
 }
+
+export default resources;
