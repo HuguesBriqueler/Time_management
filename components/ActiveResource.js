@@ -41,7 +41,7 @@ function ActiveResource() {
   const completeResource = () => {
     axios.patch("/api/resources", {...resource, status: "complete"})
       .then(_ => {
-        alert("Resource has been completed !");
+        // alert("Resource has been completed !");
         location.reload();
       })
       .catch(_ => alert("Cannot complete the resource !"))
