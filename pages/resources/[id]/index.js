@@ -18,7 +18,7 @@ const ResourceDetail = ({ resource }) => {
     axios
       .patch("/api/resources", { ...resource, status: "active" })
       .then((_) => {
-        alert("Resource has been activated !");
+        // alert("Resource has been activated !");
         location.reload();
       })
       .catch((_) => alert("Cannot activate the resource !"));
@@ -39,15 +39,20 @@ const ResourceDetail = ({ resource }) => {
                     <h1 className="title">{resource.title}</h1>
                     <p>{resource.description}</p>
                     <p>Time to finish : {resource.timeToFinish} min.</p>
-                    <Link href={`/resources/${resource.id}/edit`}>
-                      <a className="button is-warning">Update</a>
-                    </Link>
-                    <button
-                      onClick={activeResource}
-                      className="button is-success ml-1"
-                    >
-                      Activate
-                    </button>
+                    { resource.status === "inactive" &&
+                      <>
+                        <Link href={`/resources/${resource.id}/edit`}>
+                          <a className="button is-warning">
+                            Update
+                          </a>
+                        </Link>
+                        <button
+                          onClick={activeResource}
+                          className="button is-success ml-1">
+                          Activate
+                        </button>
+                      </>
+                    }
                   </div>
                 </div>
               </div>

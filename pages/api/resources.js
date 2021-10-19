@@ -4,8 +4,7 @@
 
 import axios from "axios"
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default async function(req, res) {
+const resources = async (req, res) => {
   if (req.method === "GET") {
     const resData = await fetch("http://localhost:3001/api/resources")
     const data = await resData.json()
@@ -32,3 +31,5 @@ export default async function(req, res) {
     }
   }
 }
+
+export default resources;

@@ -13,9 +13,9 @@ function ResourceList({ resources }) {
             <ResourceLabel status={resource.status} />
           </h2>
           <h1 className="title has-text-black is-3">{resource.title}</h1>
-          <p className="has-text-dark">{resource.description}</p>
+          <p className="has-text-dark mb-2">{resource.description}</p>
           <Link href={`/resources/${resource.id}`}>
-            <a className="button is-link">Details</a>
+            <a className="button is-light">Details</a>
           </Link>
         </div>
       </div>
